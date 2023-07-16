@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:clima/services/location.dart';
 import 'package:clima/utilities/secret.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +21,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
   Future<void> getLocation() async {
     Location location = Location();
     await location.getLocation();
-    print(location.latitude);
-    print(location.longitude);
   }
 
   void getData() async {
@@ -29,7 +29,16 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
     if (response.statusCode == 200) {
       String data = response.body;
-      print(data);
+
+      var decodedData = jsonDecode(data);
+
+      double temperature = decodedData['main']['temp'];
+      int condition = decodedData['weather'][0]['id'];
+      String cityName = decodedData['name'];
+
+      print(temperature);
+      print(condition);
+      print(cityName);
     } else {
       print(response.statusCode);
     }
