@@ -1,5 +1,4 @@
-import 'dart:convert';
-
+import 'package:clima/screens/location_screen.dart';
 import 'package:clima/services/location.dart';
 import 'package:clima/services/networking.dart';
 import 'package:clima/utilities/secret.dart';
@@ -33,13 +32,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
     dynamic weatherData = await networkHelper.getData();
 
-    double temperature = double.parse(weatherData['main']['temp'].toString());
-    int condition = weatherData['weather'][0]['id'];
-    String cityName = weatherData['name'];
-
-    print(temperature);
-    print(condition);
-    print(cityName);
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return LocationScreen();
+    }));
   }
 
   @override
